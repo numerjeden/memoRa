@@ -1,0 +1,8 @@
+# Ignoruj wszystkie pliki .log
+*.log
+
+# Ignoruj wszystkie pliki .tmp
+*.tmp
+
+# Ignoruj każdy katalog 'temp' w dowolnym miejscu repozytorium
+**/temp/
