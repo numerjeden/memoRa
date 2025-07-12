@@ -26,8 +26,8 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Build Docker image
-      run: docker build -t ${{ github.repository }}:${{ github.sha }} .
+     - name: Build Docker image
+      run: docker build -t ${{ github.repository | lower }}:${{ github.sha }} .
 
     - name: Test Docker image
       run: |
