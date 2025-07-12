@@ -1,28 +1,42 @@
-name: Continuous Integration 
- 
-on: 
-  push: 
-    branches: [ main ] 
-  pull_request: 
-    branches: [ main ] 
- 
-jobs: 
-  test: 
-    runs-on: ubuntu-latest 
-     
-    steps: 
-    - uses: actions/checkout@v4 
-     
-    - name: Setup Node.js 
-      uses: actions/setup-node@v4 
-      with: 
-        node-version: '18' 
-     
-    - name: Install dependencies 
-      run: npm install 
-     
-    - name: Run tests 
-      run: npm test 
-     
-    - name: Build project 
-      run: npm run build 
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run tests
+      run: npm test
+
+
+docker:
+    needs: test # To zadanie będzie uruchomione tylko, jeśli zadanie 'test' zakończy się sukcesem
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Build Docker image
+      run: docker build -t ${{ github.repository }}:${{ github.sha }} .
+
+    - name: Test Docker image
+      run: |
+        docker run -d -p 3000:3000 --name test-container ${{ github.repository }}:${{ github.sha }}
+        sleep 10 # Daj aplikacji czas na start
+        curl -f http://localhost:3000 || { echo "Aplikacja nie odpowiedziała na porcie 3000!"; exit 1; }
+        docker stop test-container
+        docker rm test-container # Usuń kontener po zakończeniu testu
