@@ -10,3 +10,10 @@ Projekt ten został stworzony na potrzeby zaliczenia przedmiotu "Narzędzia do a
 
 ## Kompilacja i uruchomienie
 
+## Licencja
+
+MIT (X11)
+
+## Specjalne podziękowania
+
+
