@@ -4,9 +4,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
- "build": "echo 'Projekt zbudowany pomyślnie! (Brak rzeczywistego procesu budowania)'"
+    "build": "echo 'Project built successfully! (No actual build process configured)'",
+    "start": "node index.js"
   },
-  "start": "node index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/numerjeden/memoRa.git"
