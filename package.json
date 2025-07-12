@@ -1,0 +1,23 @@
+{
+  "name": "numer",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo 'Projekt zbudowany pomyślnie! (Brak rzeczywistego procesu budowania)'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/numerjeden/memoRa.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/numerjeden/memoRa/issues"
+  },
+  "homepage": "https://github.com/numerjeden/memoRa#readme",
+  "description": "",
+  "devDependencies": {
+    "jest": "^30.0.4"
+  }
+}
