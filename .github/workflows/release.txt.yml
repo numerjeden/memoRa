@@ -1,0 +1,14 @@
+name: Create Release
+on:
+ push:
+ tags:
+ - 'v*'
+jobs:
+ release:
+ runs-on: ubuntu-latest
+ steps:
+ - name: Create Release
+ uses: actions/create-release@v1
+ with:
+ tag_name: ${{ github.ref }}
+ release_name: Release ${{ github.ref }}
