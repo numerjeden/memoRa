@@ -6,3 +6,10 @@
 
 # Ignoruj każdy katalog 'temp' w dowolnym miejscu repozytorium
 **/temp/
+
+target/
+*.class
+*.jar
+.mvn/
+mvnw
+mvnw.cmd
