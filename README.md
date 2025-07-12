@@ -12,7 +12,9 @@ Projekt ten został stworzony na potrzeby zaliczenia przedmiotu "Narzędzia do a
 
 ## Licencja
 
-MIT (X11)
+Ten projekt jest na licencji [licencją MIT]
+https://pl.wikipedia.org/wiki/Licencja_MIT
+
 
 ## Specjalne podziękowania
 
