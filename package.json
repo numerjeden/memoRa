@@ -6,6 +6,7 @@
     "test": "jest",
  "build": "echo 'Projekt zbudowany pomyślnie! (Brak rzeczywistego procesu budowania)'"
   },
+  "start": "node index.js"
   "repository": {
     "type": "git",
     "url": "git+https://github.com/numerjeden/memoRa.git"
