@@ -9,13 +9,11 @@ describe('Form validation', () => {
  test('should fail validation for short name', () => {
  const result = validateForm('J', 'jan@example.com', 'To jest przykładowa wiadomość');
  expect(result.isValid).toBe(false);
- expect(result.errors).toContain('Imię musi mieć co najmniej
-2 znaki');
+ expect(result.errors).toContain('Imię musi mieć co najmniej 2 znaki');
  });
  test('should fail validation for invalid email', () => {
  const result = validateForm('Jan Kowalski', 'nieprawidlowyemail', 'To jest przykładowa wiadomość');
  expect(result.isValid).toBe(false);
- expect(result.errors).toContain('Nieprawidłowy adres
-email');
+ expect(result.errors).toContain('Nieprawidłowy adres email');
  });
 });
