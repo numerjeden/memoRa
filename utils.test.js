@@ -7,8 +7,7 @@ describe('Form validation', () => {
  expect(result.errors).toHaveLength(0);
  });
  test('should fail validation for short name', () => {
- const result = validateForm('J', 'jan@example.com', 'To
-jest przykładowa wiadomość');
+ const result = validateForm('J', 'jan@example.com', 'To jest przykładowa wiadomość');
  expect(result.isValid).toBe(false);
  expect(result.errors).toContain('Imię musi mieć co najmniej
 2 znaki');
