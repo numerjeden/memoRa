@@ -1,3 +1,2 @@
-## Licencja
-
-MIT
+# Licencja MIT (X11)
+Każdy użytkownik ma nieograniczone prawo do używania, kopiowania, modyfikowania i rozpowszechniania oryginalnego lub zmodyfikowanego programu w postaci binarnej lub źródłowej.

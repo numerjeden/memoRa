@@ -1,0 +1,48 @@
+name: CI/CD with Docker
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+    - name: Install and test
+      run: |
+        npm install
+        npm test
+  docker:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Convert repository name to lowercase
+      id: repo_name_lowercase # Nadajemy ID temu krokowi, żeby móc odwołać się do jego wyjścia
+      run: echo "LOWER_REPO_NAME=$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
+
+    - name: Build Docker image
+      # Używamy wyjścia z poprzedniego kroku, żeby uzyskać nazwę repozytorium małymi literami
+      run: docker build -t ${{ steps.repo_name_lowercase.outputs.LOWER_REPO_NAME }}:${{ github.sha }} .
+
+    - name: Test Docker image
+      run: |
+        # Usunięto -d, aby logi były widoczne w workflow.
+        # Dodano --rm, aby kontener był automatycznie usuwany po zakończeniu (lub błędzie).
+        # Dodano timeout do curl i zwiększono sleep dla pewności.
+        docker run --rm -p 3000:3000 --name test-container ${{ steps.repo_name_lowercase.outputs.LOWER_REPO_NAME }}:${{ github.sha }} & # Uruchamiamy w tle za pomocą &
+        APP_PID=$! # Zapisujemy PID procesu w tle
+        sleep 30 # Daj aplikacji dużo czasu na start (możesz zmniejszyć później)
+        echo "Attempting to connect to app on localhost:3000..."
+        # Używamy -m (max-time) i --retry, żeby curl sam próbował kilka razy
+        curl -f -m 10 --retry 5 --retry-delay 2 http://localhost:3000 || { echo "Aplikacja nie odpowiedziała na porcie 3000!"; kill $APP_PID; exit 1; }
+        echo "Aplikacja odpowiedziała, zatrzymywanie kontenera..."
+        kill $APP_PID # Zatrzymujemy proces w tle, co powinno zatrzymać kontener

@@ -1,0 +1,25 @@
+{
+  "name": "numer",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "echo 'Project built successfully! (No actual build process configured)'",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/numerjeden/memoRa.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/numerjeden/memoRa/issues"
+  },
+  "homepage": "https://github.com/numerjeden/memoRa#readme",
+  "description": "",
+  "devDependencies": {
+    "jest": "^30.0.4"
+  }
+}
