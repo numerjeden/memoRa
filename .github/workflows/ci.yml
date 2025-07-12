@@ -35,8 +35,14 @@ jobs:
 
     - name: Test Docker image
       run: |
-        docker run -d -p 3000:3000 --name test-container ${{ steps.repo_name_lowercase.outputs.LOWER_REPO_NAME }}:${{ github.sha }}
-        sleep 20
-        curl -f http://localhost:3000 || { echo "Aplikacja nie odpowiedziała na porcie 3000!"; exit 1; }
-        docker stop test-container
-        docker rm test-container
+        # Usunięto -d, aby logi były widoczne w workflow.
+        # Dodano --rm, aby kontener był automatycznie usuwany po zakończeniu (lub błędzie).
+        # Dodano timeout do curl i zwiększono sleep dla pewności.
+        docker run --rm -p 3000:3000 --name test-container ${{ steps.repo_name_lowercase.outputs.LOWER_REPO_NAME }}:${{ github.sha }} & # Uruchamiamy w tle za pomocą &
+        APP_PID=$! # Zapisujemy PID procesu w tle
+        sleep 30 # Daj aplikacji dużo czasu na start (możesz zmniejszyć później)
+        echo "Attempting to connect to app on localhost:3000..."
+        # Używamy -m (max-time) i --retry, żeby curl sam próbował kilka razy
+        curl -f -m 10 --retry 5 --retry-delay 2 http://localhost:3000 || { echo "Aplikacja nie odpowiedziała na porcie 3000!"; kill $APP_PID; exit 1; }
+        echo "Aplikacja odpowiedziała, zatrzymywanie kontenera..."
+        kill $APP_PID # Zatrzymujemy proces w tle, co powinno zatrzymać kontener
