@@ -36,7 +36,7 @@ jobs:
     - name: Test Docker image
       run: |
         docker run -d -p 3000:3000 --name test-container ${{ steps.repo_name_lowercase.outputs.LOWER_REPO_NAME }}:${{ github.sha }}
-        sleep 10
+        sleep 20
         curl -f http://localhost:3000 || { echo "Aplikacja nie odpowiedziała na porcie 3000!"; exit 1; }
         docker stop test-container
         docker rm test-container
